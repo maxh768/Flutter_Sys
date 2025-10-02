@@ -43,11 +43,15 @@ import numpy as np
 # plt.show()
 
 def get_T(data):
-    time = data[0]
-    alpha = data[1]
+    data = data[1:-1, :]
+    time = data[:,0]
+    alpha = data[:,1]
     # Check if time steps are uniform (important for FFT)
     dt = np.diff(time)
-    if not np.allclose(dt, dt[0]):
+    if not np.allclose(dt, dt[0], atol=1e-6):
+        not_close = np.where(np.abs(dt - dt[0]) > 1e-6)[0]
+        print("Indices with non-uniform time steps:", not_close)
+        print("Values:", dt[not_close])
         raise ValueError("Time steps are not uniform. Interpolate before FFT.")
     # Compute sampling frequency
     fs = 1 / dt[0]
