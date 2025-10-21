@@ -7,5 +7,5 @@ xa_con = 0.2
 ra_con = 0.3
 mu_con = 0.8
 a_con = -0.3
-theta_con = 8.5 * np.pi/180.0
+theta_con = 2 * np.pi/180.0
 

@@ -8,50 +8,7 @@ class ae_set():
         self.xa_con = xa_con
         self.mu_con = mu_con
         self.a_con = a_con
-        self.theta_con = 0
-    # -------------
-    # Optimization
-    # -------------
-    # def obj1(self, w, x):
-    #     """
-    #     Objective function 1 - Maximize real(lambda)
-    #     """
-    #     pass
-
-    # def obj(self, w, x):
-    #     """
-    #     Objective function 1 - Minimize composite mass and stiffness
-    #     """
-    #     mbar, kappa_3 = _extractDVs(x)
-    #     obj = mbar - kappa_3 ** 2
-
-    #     return obj
-
-    # def pobj_px(w, x):
-    #     """
-    #     pobj / px
-    #     """
-    #     mbar, kappa_3 = _extractDVs(x)
-    #     pobj_px = np.zeros(2)
-
-    #     # mbar
-    #     pobj_px[0] = 1.0
-    #     # kappa_3
-    #     pobj_px[1] = - 2 * kappa_3
-
-    #     return pobj_px
-
-
-    # def pobj_pw(w, x):
-    #     """
-    #     pobj / pw
-    #     """
-    #     return np.zeros(4)
-
-
-    # -------------
-    # Bottom level
-    # -------------
+        self.theta_con = theta_con
 
     # Private convenience functions
     def _extractDVs(self, x):
@@ -136,7 +93,7 @@ class ae_set():
 
         return Fnl
 
-    def evalpFnlpw(self, w, x):
+    def evalpFnlpw(self, w, x, theta):
         """
         pFnl / pw
         """
@@ -150,7 +107,7 @@ class ae_set():
         MInv = self.evalMInv(x)
         pv_pw = np.zeros((2,4))
         # only have alpha (second variable in w) and only last (second) entry in v is non-zero, everything else is zero
-        pv_pw[1,1] = self.ra_con ** 2 * (kappa_3 * 3.0 * (alpha + self.theta_con) ** 2 + self.kappa_5_con * 5.0 * (alpha + self.theta_con) ** 4)
+        pv_pw[1,1] = self.ra_con ** 2 * (kappa_3 * 3.0 * (alpha + theta) ** 2 + self.kappa_5_con * 5.0 * (alpha + theta) ** 4)
 
         pFnlpw = np.zeros((4, 4))
         pFnlpw[2:, :] = -1.0 * np.dot(MInv, pv_pw)

@@ -4,7 +4,6 @@ from example_ae_setting_2 import ae_set
 import matplotlib.pyplot as plt
 
 def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con, mbar, k_3, T, x0_orbit):
-
     dyn_setting = ae_set(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con)
 
     x_init = [mbar, k_3]
@@ -15,7 +14,7 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
     # jacobian
     def Df(w):
         Ab = dyn_setting.evalA(x_init)
-        pFpw = dyn_setting.evalpFnlpw(w, x_init)
+        pFpw = dyn_setting.evalpFnlpw(w, x_init, theta_con)
         return Ab + pFpw
 
 
@@ -59,9 +58,9 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
         fun=lambda t, Y: augmented_ode(t, Y, f, Df, n),
         t_span=t_span,
         y0=Y0_aug,
-        method='RK45', # A good general-purpose solver
-        rtol=1e-8, # Relative tolerance
-        atol=1e-10 # Absolute tolerance
+        method='RK45', 
+        rtol=1e-8, 
+        atol=1e-10 
     )
 
     # Extract the final state at t=T
@@ -83,52 +82,4 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
     floquet_multipliers = np.linalg.eigvals(Monodromy_Matrix)
 
     return floquet_multipliers
-
-    # print("\nFloquet Multipliers:")
-    # print(floquet_multipliers)
-
-    # print("\nMagnitudes of Floquet Multipliers:")
-    # print(np.abs(floquet_multipliers))
-
-    # import niceplots
-    # custom_colors = ['#52a1fa', '#3eb051', '#faaa48', '#f26f6f', '#ae66de', '#485263', '#52a1fa', '#3eb051', '#faaa48', '#f26f6f', '#ae66de', '#485263']
-    # c1 = custom_colors[0]
-    # c2 = custom_colors[1]
-    # c3 = custom_colors[2]
-    # c4 = custom_colors[3]
-    # c5 = custom_colors[4]
-    # c6 = custom_colors[5]
-
-    # plt.rcParams["axes.spines.top"] = False
-    # plt.rcParams["axes.spines.right"] = False
-
-    # labelpad = 45
-    # fontsize = 16
-
-    # plt.rcParams["font.size"] = fontsize
-    # plt.rcParams["axes.titlesize"] = fontsize
-    # plt.rcParams["axes.labelsize"] = fontsize
-    # plt.rcParams["xtick.labelsize"] = fontsize
-    # plt.rcParams["ytick.labelsize"] = fontsize
-
-    # plt.rcParams["mathtext.rm"] = "serif"
-    # plt.rcParams["mathtext.it"] = "serif:italic"
-    # plt.rcParams["mathtext.bf"] = "serif:bold"
-    # plt.rcParams["mathtext.fontset"] = "custom"
-
-    # fig, ax = plt.subplots(2, figsize=(12, 6), sharex=True)
-    # plt.style.use(niceplots.get_style('james-light'))
-
-    # ax[0].plot(sol.t, sol.y[0,:], '-', label=r"$\bar{h}$", color=c1)
-    # ax[0].set_xlabel(r"$t$", fontsize=20)
-    # ax[0].set_ylabel(r"$\bar{h}$", fontsize=18, rotation=0)
-    # ax[0].xaxis.set_visible(False)
-    # ax[0].yaxis.set_label_coords(-0.1,0.5)
-
-    # ax[1].plot(sol.t, sol.y[1,:], '-', label=r"$\alpha$", color=c2)
-    # ax[1].set_xlabel(r"$t$", fontsize=20)
-    # ax[1].set_ylabel(r"$\alpha$", fontsize=18, rotation=0)
-    # ax[1].yaxis.set_label_coords(-0.1,0.5)
-
-    # plt.savefig("pert_test.pdf")
 

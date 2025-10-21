@@ -22,7 +22,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (8.5 / 180.0) * np.pi
+        theta = 0 # (2 / 180.0) * np.pi
 
         # Extract design var
         mbar = x[0]
@@ -96,7 +96,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (8.5 / 180.0) * np.pi
+        theta = 0 # (2 / 180.0) * np.pi
 
         # Extract design var
         mbar = x[0]
@@ -176,7 +176,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (8.5 / 180.0) * np.pi
+        theta = 0 # (2 / 180.0) * np.pi
 
         # Extract design var
         mbar = x[0]
@@ -245,7 +245,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (8.5 / 180.0) * np.pi
+        theta = 0 # (2 / 180.0) * np.pi
 
         # Extract design var
         mbar = x[0]
@@ -337,7 +337,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (8.5 / 180.0) * np.pi
+        theta = 0 # (2 / 180.0) * np.pi
 
         # Extract design var
         mbar = x[0]

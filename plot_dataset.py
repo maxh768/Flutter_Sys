@@ -1,7 +1,11 @@
 import matplotlib.pyplot as plt
 import niceplots
 import numpy as np
-data = np.loadtxt('sweep/k5_sweep/data_k5_30.00.csv')
+filename = 'sweep/mbar_sweep/data_mbar_13.00'
+data = np.loadtxt(f'{filename}.csv')
+data_T4 = np.loadtxt(f'{filename}_pert_T4.csv')
+flo_file = np.loadtxt('sweep/mbar_sweep/flo_l_mu_mbar_13.00.csv', dtype=np.complex128, delimiter=',')
+T = flo_file[-1]
 
 custom_colors = ['#52a1fa', '#3eb051', '#faaa48', '#f26f6f', '#ae66de', '#485263', '#52a1fa', '#3eb051', '#faaa48', '#f26f6f', '#ae66de', '#485263']
 c1 = custom_colors[0]
@@ -28,25 +32,55 @@ plt.rcParams["mathtext.it"] = "serif:italic"
 plt.rcParams["mathtext.bf"] = "serif:bold"
 plt.rcParams["mathtext.fontset"] = "custom"
 
-fig, ax = plt.subplots(2, figsize=(12, 6), sharex=True)
+fig, ax = plt.subplots(3, 2, figsize=(12, 6), sharex=False)
 plt.style.use(niceplots.get_style('james-light'))
 
-# start_ind = int(np.round((t_start_pert) * t_step - 100))
-# end_ind = int(np.round((t_end_pert) * t_step + 100))
-# start_ind_t = int(start_ind/t_step)
-# end_ind_t = int(end_ind/t_step)
+ax[0, 0].set_xlim([499, 507])
+ax[0, 0].plot(data[:,0], data[:,1], '-', label=r"$\bar{h}$", color=c1)
+# ax[0, 0].set_xlabel(r"$t$", fontsize=20)
+ax[0, 0].set_ylabel(r"$\bar{h}$", fontsize=18, rotation=0)
+ax[0, 0].xaxis.set_visible(False)
+ax[0, 0].axvline(500, color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[0, 0].set_title(r'Perturbation at $T=0$')
 
-ax[0].plot(data[:,0], data[:,1], '-', label=r"$\bar{h}$", color=c1)
-ax[0].set_xlabel(r"$t$", fontsize=20)
-ax[0].set_ylabel(r"$\bar{h}$", fontsize=18, rotation=0)
-# ax[0].set_xlim([start_ind,end_ind])
-ax[0].xaxis.set_visible(False)
-ax[0].yaxis.set_label_coords(-0.1,0.5)
+ax[1, 0].set_xlim([499, 507])
+ax[1, 0].plot(data[:,0], data[:,2], '-', label=r"$\alpha$", color=c2)
+ax[1, 0].set_ylabel(r"$\alpha$", fontsize=18, rotation=0)
+ax[1, 0].axvline(500, color=c6, linestyle='--', linewidth=1.5, zorder=10)
 
-ax[1].plot(data[:,0], data[:,2], '-', label=r"$\alpha$", color=c2)
-ax[1].set_xlabel(r"$t$", fontsize=20)
-ax[1].set_ylabel(r"$\alpha$", fontsize=18, rotation=0)
-# ax[1].set_xlim([start_ind,end_ind])
-ax[1].yaxis.set_label_coords(-0.1,0.5)
+ax[2, 0].plot(data[:,0], data[:,2], '-', color=c2)
+ax[2, 0].set_xlabel(r"$t$", fontsize=20)
+ax[2, 0].set_xlim([400, 600])
+ax[2, 0].set_ylabel(r"$\alpha$", fontsize=18, rotation=0)
+ax[2, 0].set_ylim([0.2, 0.4])
+ax[2, 0].axvline(500, color=c6, linestyle='--', linewidth=1.5, zorder=10)
+
+
+#################
+
+ax[0, 1].set_xlim([499, 507])
+ax[0, 1].plot(data_T4[:,0], data_T4[:,1], '-', label=r"$\bar{h}$", color=c1)
+ax[0, 1].axvline(500 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[0, 1].xaxis.set_visible(False)
+ax[0, 1].set_title(r'Perturbation at $T=\frac{1}{4}$')
+
+ax[1, 1].set_xlim([499, 507])
+ax[1, 1].plot(data_T4[:,0], data_T4[:,2], '-', label=r"$\alpha$", color=c2)
+ax[1, 1].axvline(500 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
+
+ax[2, 1].plot(data_T4[:,0], data_T4[:,2], '-', color=c2)
+ax[2, 1].set_xlabel(r"$t$", fontsize=20)
+ax[2, 1].set_xlim([400, 600])
+ax[2, 1].set_ylim([0.2, 0.4])
+ax[2, 1].axvline(500 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
+
+
+ax[0, 0].set_xlim([499, 507])
+ax[0, 1].set_xlim([499, 507])
+ax[1, 0].set_xlim([499, 507])
+ax[1, 1].set_xlim([499, 507])
+ax[2, 0].set_xlim([400, 600])
+ax[2, 1].set_xlim([400, 600])
+
 
 plt.savefig("unsteady_ae_pert_theta_first.pdf")
