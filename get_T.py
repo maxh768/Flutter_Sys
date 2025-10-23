@@ -44,6 +44,9 @@ import numpy as np
 
 def get_T(data):
     data = data[1:-1, :]
+    # Use only the first half of the data
+    half_length = len(data) // 2
+    data = data[half_length:]
     time = data[:,0]
     alpha = data[:,1]
     # Check if time steps are uniform (important for FFT)

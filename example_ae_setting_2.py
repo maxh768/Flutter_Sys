@@ -363,3 +363,42 @@ class ae_set():
         pLST_pv[-2] = 1.0
 
         return pLST_pv
+    
+if __name__ == "__main__":
+
+    # default params : 
+    kappa_5_con = 50.0
+    Omega_con = 0.5
+    xa_con = 0.2
+    ra_con = 0.3
+    mu_con = 0.8
+    a_con = -0.3
+    theta_con = 0
+    mbar = 12
+    k_3 = -1
+
+    # (self, kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con)
+    ae = ae_set(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con)
+    x = [mbar, k_3]
+
+    w = np.ones(4)
+
+    # FD for A:
+
+    h = 1e-6
+    A_fd = np.zeros((4, 4))
+    for i in range(4):
+        w_p = w.copy()
+        w_p[i] += h
+        f_p = ae.res(w_p, x, 0)
+
+        w_m = w.copy()
+        w_m[i] -= h
+        f_m = ae.res(w_m, x, 0)
+
+        A_fd[:, i] = (f_p - f_m) / (2 * h)
+        
+
+    print("A_fd:", A_fd)
+
+    

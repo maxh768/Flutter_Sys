@@ -67,9 +67,8 @@ def simulate(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con, m
 
     # set integration bounds
     t0 = 0.0
-    t_bound = 1000.0
-    # t_step = 0.005
-    # t_step = 0.1
+    t_bound = 800.0
+
     N = int(t_bound / t_step) 
 
 

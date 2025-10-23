@@ -22,7 +22,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (2 / 180.0) * np.pi
+        theta = 0
 
         # Extract design var
         mbar = x[0]
@@ -30,7 +30,6 @@ class ae_forbif():
 
         # Extract state var
         alpha = w[1]
-
 
         Ms = np.zeros((2, 2))
         Ms[0, 0] = 1.0
@@ -96,7 +95,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (2 / 180.0) * np.pi
+        theta = 0
 
         # Extract design var
         mbar = x[0]
@@ -176,7 +175,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (2 / 180.0) * np.pi
+        theta = 0
 
         # Extract design var
         mbar = x[0]
@@ -245,7 +244,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (2 / 180.0) * np.pi
+        theta = 0
 
         # Extract design var
         mbar = x[0]
@@ -337,7 +336,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0 # (2 / 180.0) * np.pi
+        theta = 0
 
         # Extract design var
         mbar = x[0]
@@ -378,3 +377,42 @@ class ae_forbif():
     def pforcepw(self, mu, w, x):
 
         return self.func_A(w, mu, x)
+    
+
+if __name__ == "__main__":
+    # default params : 
+    kappa_5_con = 50.0
+    Omega_con = 0.5
+    xa_con = 0.2
+    ra_con = 0.3
+    mu_con = 0.8
+    a_con = -0.3
+    theta_con = 0
+    mbar = 12
+    k_3 = -1
+
+    ae = ae_forbif(kappa_5_con, Omega_con, ra_con, xa_con, a_con)
+    x = [mbar, k_3]
+
+    w = np.ones(4)
+
+    A = ae.func_A(w, mu_con, x)
+
+    # FD for A:
+
+    h = 1e-6
+    A_fd = np.zeros((4, 4))
+    for i in range(4):
+        w_p = w.copy()
+        w_p[i] += h
+        f_p = ae.func(w_p, mu_con, x)
+
+        w_m = w.copy()
+        w_m[i] -= h
+        f_m = ae.func(w_m, mu_con, x)
+
+        A_fd[:, i] = (f_p - f_m) / (2 * h)
+
+    print("A:", A)
+    print("A_fd:", A_fd)
+    print("Allclose A:", np.allclose(A, A_fd))
