@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import solve_ivp
 from example_ae_setting_2 import ae_set
+from example_setting_ae_forbif import ae_forbif
 import matplotlib.pyplot as plt
 import scipy
 
@@ -13,20 +14,27 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
     def f(t, w):
         return dyn_setting.res(w, x_init, theta_con)
     
-    def linearize_system(w):
-        """Compute the Jacobian matrix of the system at state w."""
-        epsilon = 1e-6
-        n = len(w)
-        J = np.zeros((n, n))
-        f0 = f(0, w)
-        for i in range(n):
-            w_perturbed = np.copy(w)
-            w_perturbed[i] += epsilon
-            f_perturbed = f(0, w_perturbed)
-            J[:, i] = (f_perturbed - f0) / epsilon
-
-        return J
+    # kappa_5, Omega, r_alpha, x_alpha, a)
+    ae_bif = ae_forbif(kappa_5_con, Omega_con, ra_con, xa_con, a_con)
     
+    # def linearize_system(w):
+    #     """Compute the Jacobian matrix of the system at state w."""
+    #     epsilon = 1e-6
+    #     n = len(w)
+    #     J = np.zeros((n, n))
+    #     f0 = f(0, w)
+    #     for i in range(n):
+    #         w_perturbed = np.copy(w)
+    #         w_perturbed[i] += epsilon
+    #         f_perturbed = f(0, w_perturbed)
+    #         J[:, i] = (f_perturbed - f0) / epsilon
+
+    #     return J
+
+    def linearize_system(w):
+        A = ae_bif.func_A(w, mu_con, x_init)
+        return A
+
     def euler_full(x0, T, dt):
         x1 = x0[0]
         x2 = x0[1]
@@ -62,7 +70,7 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
 
 
     def euler_linear(x0, T, dt):
-        x0 = x0 - y_euler[0]
+        # x0 = x0 - y_euler[0]
 
         x1 = x0[0]
         x2 = x0[1]
@@ -90,15 +98,16 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
             x_save[i+1, :] = np.array([x1, x2, dx1, dx2])
         return x_save
 
-    perturbation = 1e-4 * np.eye(4)
+    perturbation = 1e-2 * np.eye(4)
 
-    X_0 = np.zeros((4, 4))
-    for i in range(4):
-        X_0[:, i] = x0_orbit + perturbation[:, i]
+    #X_0 = np.zeros((4, 4))
+    X_0 = perturbation
+    #for i in range(4):
+    #    X_0[:, i] = x0_orbit + perturbation[:, i]
 
     # sim 1:
     x01 = X_0[:, 0]
-    x_sim1 = euler_linear(x01, T, dt) + y_euler
+    x_sim1 = euler_linear(x01, T, dt) # + y_euler
     x1 = x_sim1[-1, :]
 
     # fig, ax = plt.subplots()
@@ -115,21 +124,21 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
 
     # sim 2:
     x02 = X_0[:, 1]
-    x_sim2 = euler_linear(x02, T, dt) + y_euler
+    x_sim2 = euler_linear(x02, T, dt) #+ y_euler
     x2 = x_sim2[-1, :]
 
     # sim 3:
     x03 = X_0[:, 2]
-    x_sim3 = euler_linear(x03, T, dt) + y_euler
+    x_sim3 = euler_linear(x03, T, dt) #+ y_euler
     x3 = x_sim3[-1, :]
 
     # sim 4:
     x04 = X_0[:, 3]
-    x_sim4 = euler_linear(x04, T, dt) + y_euler
+    x_sim4 = euler_linear(x04, T, dt) #+ y_euler
     x4 = x_sim4[-1, :]
 
     X_T = np.column_stack((x1, x2, x3, x4))
-    monodromy_matrix = np.linalg.solve(X_0, X_T)
+    monodromy_matrix = np.linalg.inv(X_0) @ X_T # np.linalg.solve(X_0, X_T)
     mult, _ = np.linalg.eig(monodromy_matrix)
 
     return mult

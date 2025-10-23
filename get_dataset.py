@@ -23,7 +23,7 @@ mbar_arr = np.linspace(5, 13, 20)
 k_3_arr = np.linspace(-3, 1, 20)
 k_5_arr = np.linspace(30, 70, 20)
 
-dt_big = 0.01
+dt_big = 0.05
 dt_small = 0.005
 
 main_folder = 'sweep'
@@ -53,9 +53,9 @@ for mbar_i in mbar_arr:
     Hopf_bif_obj.solve_bif_eig(mu_lower, mu_upper, delta)
     # mu_crit = Hopf_bif_obj.mu
 
-    Hopf_bif_obj.mu = mu_con
-    # Hopf_bif_obj.w = w0
-    # eigval, eigvec = Hopf_bif_obj.solve_eig_R(mu_crit, w0)
+    # Hopf_bif_obj.mu = mu_con
+    # Hopf_bif_obj.w = [0, 1e-3, 0, 0]
+    # eigval, eigvec = Hopf_bif_obj.solve_eig_R(mu_con, Hopf_bif_obj.w)
     # eigval = np.imag(eigval) * 1j
     # Hopf_bif_obj.eigval_bif_R = eigval
     # Hopf_bif_obj.eigvec_bif_R = eigvec
@@ -90,13 +90,23 @@ for k_3_i in k_3_arr:
     delta = 1e-6
 
     Hopf_bif_obj.solve_bif_eig(mu_lower, mu_upper, delta, win=None)
-    Hopf_bif_obj.mu = mu_con
-    mu_crit = Hopf_bif_obj.mu
+    # Hopf_bif_obj.mu = mu_con
+    # mu_crit = Hopf_bif_obj.mu
+
+    # Hopf_bif_obj.mu = mu_con
+    # Hopf_bif_obj.w = [0, 1e-3, 0, 0]
+    # eigval, eigvec = Hopf_bif_obj.solve_eig_R(mu_con, Hopf_bif_obj.w)
+    # eigval = np.imag(eigval) * 1j
+    # Hopf_bif_obj.eigval_bif_R = eigval
+    # Hopf_bif_obj.eigvec_bif_R = eigvec
 
     Hopf_bif_obj.solve_eig_L()
     l = Hopf_bif_obj.compute_stab(ae.func_B, ae.func_C)
 
-    mult_l_mu = np.concatenate((floquet_multipliers, [l, mu_crit], np.array([T])))
+    Hopf_bif_obj.solve_eig_L()
+    l = Hopf_bif_obj.compute_stab(ae.func_B, ae.func_C)
+
+    mult_l_mu = np.concatenate((floquet_multipliers, [l, 0], np.array([T])))
     # mult_l_mu = [l, 0]
 
     # np.savetxt(f'./{main_folder}/{k_3_folder}/data_k3_{k_3_i:.2f}_pert_T4.csv', data_pert_2)
@@ -124,17 +134,27 @@ for k_5_i in k_5_arr:
     delta = 1e-6
 
     Hopf_bif_obj.solve_bif_eig(mu_lower, mu_upper, delta, win=None)
-    Hopf_bif_obj.mu = mu_con
+    #Hopf_bif_obj.mu = mu_con
 
-    mu_crit = Hopf_bif_obj.mu
+    #mu_crit = Hopf_bif_obj.mu
+
+    # Hopf_bif_obj.mu = mu_con
+    # Hopf_bif_obj.w = [0, 1e-3, 0, 0]
+    # eigval, eigvec = Hopf_bif_obj.solve_eig_R(mu_con, Hopf_bif_obj.w)
+    # eigval = np.imag(eigval) * 1j
+    # Hopf_bif_obj.eigval_bif_R = eigval
+    # Hopf_bif_obj.eigvec_bif_R = eigvec
 
     Hopf_bif_obj.solve_eig_L()
     l = Hopf_bif_obj.compute_stab(ae.func_B, ae.func_C)
 
-    mult_l_mu = np.concatenate((floquet_multipliers, [l, mu_crit], np.array([T])))
+    Hopf_bif_obj.solve_eig_L()
+    l = Hopf_bif_obj.compute_stab(ae.func_B, ae.func_C)
+
+    mult_l_mu = np.concatenate((floquet_multipliers, [l, 0], np.array([T])))
     # mult_l_mu = [l, 0]
 
     # np.savetxt(f'./{main_folder}/{k_5_folder}/data_k5_{k_5_i:.2f}_pert_T4.csv', data_pert_2)
     # np.savetxt(f'./{main_folder}/{k_5_folder}/data_k5_{k_5_i:.2f}.csv', data_pert)
     # np.savetxt(f'./{main_folder}/{k_5_folder}/data_k5_{k_5_i:.2f}_pert_T8.csv', data_pert_3)
-#     np.savetxt(f'./{main_folder}/{k_5_folder}/flo_l_mu_k5_{k_5_i:.2f}.csv', mult_l_mu)
+    np.savetxt(f'./{main_folder}/{k_5_folder}/flo_l_mu_k5_{k_5_i:.2f}.csv', mult_l_mu)
