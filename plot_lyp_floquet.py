@@ -56,13 +56,13 @@ fig, ax = plt.subplots(2, 3, figsize=(15, 7))
 
 # k3:
 ax[0, 0].set_title(r'$k_3$ sweep')
-max_under_one_k3 = np.where(mask_k3, mult_k3, np.nan)
-# ax[0, 0].plot(k_3_arr, np.max(max_under_one_k3, axis=0), marker='o')
-#for i in range(4):
-    #ax[0, 0].plot(k_3_arr, max_under_one_k3[i, :], marker='o', label=f'Mode {i+1}')
-ax[0, 0].plot(k_3_arr, np.nanmean(mult_k3, axis=0), marker='o', label='Mean')
+max_under_one_k3 = np.where(mask_k3, mult_k3, -np.inf)
+ax[0, 0].plot(k_3_arr, np.max(max_under_one_k3, axis=0), marker='o')
+# for i in range(4):
+#     ax[0, 0].plot(k_3_arr, mult_k3[i, :], marker='o', label=f'Mode {i+1}')
+# ax[0, 0].plot(k_3_arr, np.nanmean(mult_k3, axis=0), marker='o', label='Mean')
 ax[0, 0].set_ylabel('Floquet Multiplier')
-ax[0, 0].set_ylim([0.6, 0.8])
+# ax[0, 0].set_ylim([0.6, 0.8])
 
 # ax[1, 0].axhline(y=0, color='black', linestyle='--', alpha=0.7)
 ax[1, 0].plot(k_3_arr, l_k3, marker='o', color='orange')
@@ -70,31 +70,31 @@ ax[1, 0].set_ylabel('First Lyapunov Coefficient')
 ax[1, 0].set_xlabel(r'$k_3$')
 
 # mbar:
-ax[0, 1].set_title(r'$\bar{m}$ sweep')
-max_under_one_mbar = np.where(mask_mbar, mult_mbar, np.nan)
+# ax[0, 1].set_title(r'$\bar{m}$ sweep')
+# max_under_one_mbar = np.where(mask_mbar, mult_mbar, -np.inf)
 # ax[0, 1].plot(mbar_arr, np.max(max_under_one_mbar, axis=0), marker='o')
-#for i in range(4):
-    #ax[0, 1].plot(mbar_arr, max_under_one_mbar[i, :], marker='o', label=f'Mode {i+1}')
-ax[0, 1].plot(mbar_arr, np.nanmean(mult_mbar, axis=0), marker='o', label='Mean')
-ax[0, 1].set_ylim([0.3, 1])
+# # for i in range(4):
+#     # ax[0, 1].plot(mbar_arr, mult_mbar[i, :], marker='o', label=f'Mode {i+1}')
+# # ax[0, 1].plot(mbar_arr, np.nanmean(mult_mbar, axis=0), marker='o', label='Mean')
+# # ax[0, 1].set_ylim([0.3, 1])
 
-# ax[1, 1].axhline(y=0, color='black', linestyle='--', alpha=0.7)
-ax[1, 1].plot(mbar_arr, l_mbar, marker='o', color='orange')
-ax[1, 1].set_xlabel(r'$\bar{m}$')
+# # ax[1, 1].axhline(y=0, color='black', linestyle='--', alpha=0.7)
+# ax[1, 1].plot(mbar_arr, l_mbar, marker='o', color='orange')
+# ax[1, 1].set_xlabel(r'$\bar{m}$')
 
 # k5:
 ax[0, 2].set_title(r'$k_5$ sweep')
-max_under_one_k5 = np.where(mask_k5, mult_k5, np.nan)
-# ax[0, 2].plot(k_5_arr, np.max(max_under_one_k5, axis=0), marker='o')
-#for i in range(4):
-   #ax[0, 2].plot(k_5_arr, max_under_one_k5[i, :], marker='o', label=f'Mode {i+1}')
-ax[0, 2].plot(k_5_arr, np.nanmean(mult_k5, axis=0), marker='o', label='Mean')
-ax[0, 2].set_ylim([0.6, 0.8])
+max_under_one_k5 = np.where(mask_k5, mult_k5, -np.inf) 
+ax[0, 2].plot(k_5_arr, np.max(max_under_one_k5, axis=0), marker='o')
+# for i in range(4):
+#    ax[0, 2].plot(k_5_arr, mult_k5[i, :], marker='o', label=f'Mode {i+1}')
+# ax[0, 2].plot(k_5_arr, np.nanmean(mult_k5, axis=0), marker='o', label='Mean')
+# ax[0, 2].set_ylim([0.6, 0.8])
 
 # ax[1, 2].axhline(y=0, color='black', linestyle='--', alpha=0.7)
 ax[1, 2].plot(k_5_arr, l_k5, marker='o', color='orange')
 ax[1, 2].set_xlabel(r'$k_5$')
-ax[1, 2].set_ylim([0, 0.3])
+# ax[1, 2].set_ylim([0, 0.3])
 
 niceplots.save_figs(fig, 'floq_lyp_results.pdf', formats='pdf', bbox_inches='tight')
 # plt.show()

@@ -3,12 +3,13 @@ import numpy as np
 
 
 class ae_forbif():
-    def __init__(self, kappa_5, Omega, r_alpha, x_alpha, a):
+    def __init__(self, kappa_5, Omega, r_alpha, x_alpha, a, theta_con):
         self.kappa_5 = kappa_5
         self.Omega = Omega
         self.r_alpha = r_alpha
         self.x_alpha = x_alpha
         self.a = a
+        self.theta = theta_con
 
     def func(self, w, mu, x):
         
@@ -22,7 +23,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0
+        theta = self.theta
 
         # Extract design var
         mbar = x[0]
@@ -95,7 +96,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0
+        theta = self.theta
 
         # Extract design var
         mbar = x[0]
@@ -175,7 +176,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0
+        theta = self.theta
 
         # Extract design var
         mbar = x[0]
@@ -244,7 +245,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0
+        theta = self.theta
 
         # Extract design var
         mbar = x[0]
@@ -336,7 +337,7 @@ class ae_forbif():
         r_alpha = self.r_alpha
         x_alpha = self.x_alpha
         kappa_5 = self.kappa_5
-        theta = 0
+        theta = self.theta
 
         # Extract design var
         mbar = x[0]

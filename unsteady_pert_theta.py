@@ -67,7 +67,7 @@ def simulate(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con, m
 
     # set integration bounds
     t0 = 0.0
-    t_bound = 800.0
+    t_bound = 1000.0
 
     N = int(t_bound / t_step) 
 
@@ -77,15 +77,15 @@ def simulate(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con, m
 
     if pert:
         # create perturbation in theta
-        pert_mag = 7
+        pert_mag = -7
         th_pert = np.linspace(0, (pert_mag) * np.pi/180.0, 5)
         th_per_2 = np.linspace((pert_mag) * np.pi/180.0, 0, 5)
         th_pert = np.concatenate((th_pert, th_per_2))
 
         if pert_2:
-            t_start_pert = int((500 + (T_period/4)) / t_step)
+            t_start_pert = int((800 + (T_period/4)) / t_step)
         else:
-            t_start_pert = int((500) / t_step)
+            t_start_pert = int((800) / t_step)
         t_end_pert = t_start_pert + 10
 
     # collect data
@@ -100,7 +100,7 @@ def simulate(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con, m
             if i >= t_start_pert and i < t_end_pert:
                 sys_inst.theta = theta_con + th_pert[i - t_start_pert]
                 print(f'Applying perturbation at time {integrator_init.t:.2f}, theta = {sys_inst.theta:.4f}')
-
+                
         integrator_init.step()
 
         t_values_init.append(integrator_init.t)

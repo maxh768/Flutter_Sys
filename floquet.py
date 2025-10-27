@@ -15,7 +15,7 @@ def get_floquet(kappa_5_con, Omega_con, ra_con, xa_con, mu_con, a_con, theta_con
         return dyn_setting.res(w, x_init, theta_con)
     
     # kappa_5, Omega, r_alpha, x_alpha, a)
-    ae_bif = ae_forbif(kappa_5_con, Omega_con, ra_con, xa_con, a_con)
+    ae_bif = ae_forbif(kappa_5_con, Omega_con, ra_con, xa_con, a_con, theta_con)
     
     # def linearize_system(w):
     #     """Compute the Jacobian matrix of the system at state w."""

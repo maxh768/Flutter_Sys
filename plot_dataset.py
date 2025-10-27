@@ -35,52 +35,51 @@ plt.rcParams["mathtext.fontset"] = "custom"
 fig, ax = plt.subplots(3, 2, figsize=(12, 6), sharex=False)
 plt.style.use(niceplots.get_style('james-light'))
 
-ax[0, 0].set_xlim([499, 507])
+ax[0, 0].set_xlim([799, 807])
 ax[0, 0].plot(data[:,0], data[:,1], '-', label=r"$\bar{h}$", color=c1)
 # ax[0, 0].set_xlabel(r"$t$", fontsize=20)
 ax[0, 0].set_ylabel(r"$\bar{h}$", fontsize=18, rotation=0)
 ax[0, 0].xaxis.set_visible(False)
-ax[0, 0].axvline(500, color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[0, 0].axvline(800, color=c6, linestyle='--', linewidth=1.5, zorder=10)
 ax[0, 0].set_title(r'Perturbation at $T=0$')
 
-ax[1, 0].set_xlim([499, 507])
+ax[1, 0].set_xlim([799, 807])
 ax[1, 0].plot(data[:,0], data[:,2], '-', label=r"$\alpha$", color=c2)
 ax[1, 0].set_ylabel(r"$\alpha$", fontsize=18, rotation=0)
-ax[1, 0].axvline(500, color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[1, 0].axvline(800, color=c6, linestyle='--', linewidth=1.5, zorder=10)
 
 ax[2, 0].plot(data[:,0], data[:,2], '-', color=c2)
 ax[2, 0].set_xlabel(r"$t$", fontsize=20)
-ax[2, 0].set_xlim([400, 600])
 ax[2, 0].set_ylabel(r"$\alpha$", fontsize=18, rotation=0)
-ax[2, 0].set_ylim([0.2, 0.4])
-ax[2, 0].axvline(500, color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[2, 0].set_ylim([0.18, 0.2])
+ax[2, 0].axvline(800, color=c6, linestyle='--', linewidth=1.5, zorder=10)
 
 
 #################
 
-ax[0, 1].set_xlim([499, 507])
+ax[0, 1].set_xlim([799, 807])
 ax[0, 1].plot(data_T4[:,0], data_T4[:,1], '-', label=r"$\bar{h}$", color=c1)
-ax[0, 1].axvline(500 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[0, 1].axvline(800 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
 ax[0, 1].xaxis.set_visible(False)
 ax[0, 1].set_title(r'Perturbation at $T=\frac{1}{4}$')
 
-ax[1, 1].set_xlim([499, 507])
+ax[1, 1].set_xlim([799, 807])
 ax[1, 1].plot(data_T4[:,0], data_T4[:,2], '-', label=r"$\alpha$", color=c2)
-ax[1, 1].axvline(500 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[1, 1].axvline(800 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
 
 ax[2, 1].plot(data_T4[:,0], data_T4[:,2], '-', color=c2)
 ax[2, 1].set_xlabel(r"$t$", fontsize=20)
-ax[2, 1].set_xlim([400, 600])
-ax[2, 1].set_ylim([0.2, 0.4])
-ax[2, 1].axvline(500 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
+ax[2, 1].set_ylim([0.18, 0.2])
+ax[2, 1].axvline(800 + (T/4), color=c6, linestyle='--', linewidth=1.5, zorder=10)
 
 
-ax[0, 0].set_xlim([499, 507])
-ax[0, 1].set_xlim([499, 507])
-ax[1, 0].set_xlim([499, 507])
-ax[1, 1].set_xlim([499, 507])
-ax[2, 0].set_xlim([400, 600])
-ax[2, 1].set_xlim([400, 600])
+ax[0, 0].set_xlim([799, 807])
+ax[0, 1].set_xlim([799, 807])
+ax[1, 0].set_xlim([799, 807])
+ax[1, 1].set_xlim([799, 807])
+
+ax[2, 0].set_xlim([700, 900])
+ax[2, 1].set_xlim([700, 900])
 
 
 plt.savefig("unsteady_ae_pert_theta_first.pdf")
